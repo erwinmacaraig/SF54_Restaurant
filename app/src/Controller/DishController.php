@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
     /**
      * @Route("/dish", name="dish.")
@@ -36,6 +37,16 @@ class DishController extends AbstractController
         $form->handleRequest($request);
         if($form->isSubmitted()) {
             $em = $this->getDoctrine()->getManager();
+
+            $image = $request->files->get('dish')['attachment'];
+            if($image) {
+                $dateinname = md5(uniqid()). '.'.$image->guessClientExtension();
+            }
+            $image->move(
+                $this->getParameter('uploaded_images_dir'),
+                $dateinname
+            );
+            $dish->setImage($dateinname);
             $em->persist($dish);
             $em->flush();
            
@@ -60,5 +71,17 @@ class DishController extends AbstractController
         $em->flush();
         $this->addFlash('success', 'Dish was removed successfully');
         return $this->redirect($this->generateUrl('dish.app_dish'));
+    }
+
+    /**
+     * @Route("/show/{id}", name="show")     
+     */
+    public function showImage($id, DishRepository $dishRepository) {
+        $em = $this->getDoctrine()->getManager();
+        $dish = $dishRepository->find($id);
+        return $this->render('dish/show.html.twig', [
+             "dish" => $dish
+         ]);
+
     }
 }
