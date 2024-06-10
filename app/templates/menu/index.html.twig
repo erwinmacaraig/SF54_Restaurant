@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MenuController!{% endblock %}
+
+{% block body %}
+<!-- Playlist section -->
+	<section class="playlist-section spad">
+		<div class="container-fluid">
+			<div class="section-title">
+				<h2>Menu Card</h2>
+			</div>
+			<div class="container">
+				<ul class="playlist-filter controls">
+					<li class="control" data-filter=".Drink">Drink</li>
+					<li class="control" data-filter=".Appetizer">Appetizer</li>
+					<li class="control" data-filter=".Main">Main Dishes</li>
+					<li class="control" data-filter=".Desserts">Desserts</li>
+					<li class="control" data-filter="all">All Dishes</li>
+				</ul>
+			</div>                                              
+			<div class="clearfix"></div>
+			<div class="row playlist-area">
+            {% for dish in dishes %}
+				<div class="mix col-lg-3 col-md-4 col-sm-6 {{dish.category}}">
+					<div class="playlist-item">
+						<img src="{{asset('images/' ~ dish.image)}}" alt="">
+						<h5>{{dish.name}} - EUR {{dish.price}} </h5>
+                        <p>Best Number. {{dish.id}} </p>
+					</div>
+				</div>
+            {% endfor %}
+			</div>
+		</div>
+	</section>
+	<!-- Playlist section end -->
+{% endblock %}
