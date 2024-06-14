@@ -3,7 +3,11 @@
 {% block title %}Hello MenuController!{% endblock %}
 
 {% block body %}
-<!-- Playlist section -->
+	{% for message in app.flashes('order') %}
+		<div class="alert alert-success">
+			<h3>{{message}}</h3>
+		</div>
+	{% endfor %}
 	<section class="playlist-section spad">
 		<div class="container-fluid">
 			<div class="section-title">
@@ -25,7 +29,9 @@
 					<div class="playlist-item">
 						<img src="{{asset('images/' ~ dish.image)}}" alt="">
 						<h5>{{dish.name}} - EUR {{dish.price}} </h5>
-                        <p>Best Number. {{dish.id}} </p>
+                        <p>Order Number. {{dish.id}} 
+						<a class="btn btn-outline-danger btn-sm" href="{{path('order', {id: dish.id})}}" role="button">Order</a>
+						</p>
 					</div>
 				</div>
             {% endfor %}
