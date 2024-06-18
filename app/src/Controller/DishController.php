@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
     /**
      * @Route("/dish", name="dish.")
@@ -83,5 +84,14 @@ class DishController extends AbstractController
              "dish" => $dish
          ]);
 
+    }
+
+    /**
+     * @Route("/price", name="price")
+     */
+    public function price(DishRepository $dishRepository){
+        $dish = $dishRepository->find30Pesos();
+
+        return new JsonResponse(['results' => $dish]);
     }
 }

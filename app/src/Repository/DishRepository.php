@@ -63,4 +63,10 @@ class DishRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    public function find30Pesos()
+    {
+        $qb = $this->createQueryBuilder('g');
+        $qb->select('g.name, g.price')->where('g.price <= 30');
+        return $qb->getQuery()->getResult();
+    }
 }

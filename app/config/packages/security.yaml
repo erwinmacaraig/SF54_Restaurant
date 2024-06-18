@@ -37,6 +37,7 @@ security:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/dish, roles: ROLE_USER }
         - { path: ^/reg, roles: ROLE_USER }
+        - { path: ^/admin, roles: ROLE_USER }
 
 when@test:
     security:
